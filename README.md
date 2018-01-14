@@ -21,7 +21,7 @@ yarn global add ast-grep
 With `npm`:
 
 ```shellsession
-npm install --global --save ast-grep
+npm install --global ast-grep
 ```
 
 ## Usage
