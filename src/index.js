@@ -1,17 +1,18 @@
 import './polyfills';
 
 import traverse from '@babel/traverse';
-
-import parse from './parse';
 import omitDeep from 'omit-deep-lodash';
 import deepEqual from 'deep-equal';
 
-export default (text, { pattern }) => {
+// import preprocess from './preprocess';
+import parse from './parse';
+
+export default (text, { pattern, anonymous }) => {
   const patternAsts = [].concat(getMeaningfulNode(parse(pattern)));
   const ast = parse(text);
 
   return patternAsts
-    .flatMap(patternAst => matchAsts(patternAst, ast))
+    .flatMap(patternAst => matchAsts(patternAst, ast, { anonymous }))
     .map(match => {
       const code =
         readLineToStart(text, match.start) +
@@ -34,9 +35,10 @@ const getMeaningfulNode = ast => {
   }
 };
 
-const omitKeys = ['start', 'end', 'loc'];
+const omitKeysDefault = ['start', 'end', 'loc'];
 
-const matchAsts = (smaller, bigger) => {
+const matchAsts = (smaller, bigger, { anonymous }) => {
+  const omitKeys = anonymous ? [...omitKeysDefault, 'name'] : omitKeysDefault;
   const matches = [];
   smaller = omitDeep(smaller, ...omitKeys);
 

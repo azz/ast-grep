@@ -8,6 +8,8 @@
 
 > Like grep, but more powerful than you can possibly imagine.
 
+Search your JavaScript files for patterns based on AST shape, rather than substrings or regular expressions.
+
 ## Install
 
 With `yarn`:
@@ -23,3 +25,36 @@ npm install --save ast-grep
 ```
 
 ## Usage
+
+On standard in:
+
+```shellsession
+$ echo 'code();' | ast-grep 'code'
+code();
+$ ast-grep 'foo()' < file.js
+foo();
+```
+
+On a set of files:
+
+```shellsession
+$ ast-grep 'yield* foo();' '**/*.js'
+```
+
+## Flags
+
+### `--anonymous`
+
+**Alias**: `-a`
+
+Ignore names, this includes identifiers, types, etc.
+
+## Examples
+
+### Find all no-arg function calls:
+
+```shellsession
+$ echo -e 'foo();\nbar();' | ast-grep 'fn()' -a
+foo();
+bar();
+```

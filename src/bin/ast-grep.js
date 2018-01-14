@@ -9,7 +9,13 @@ import getStream from 'get-stream';
 import astGrep from '..';
 
 const { _: [grepPattern, ...filePatterns], ...args } = mri(
-  process.argv.slice(2)
+  process.argv.slice(2),
+  {
+    alias: {
+      a: 'anonymous',
+    },
+    boolean: ['anonymous'],
+  }
 );
 
 async function run() {

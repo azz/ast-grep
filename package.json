@@ -27,7 +27,7 @@
     "build": "babel src -d dist --copy-files --ignore __tests__",
     "test": "jest",
     "test:generate": "babel-node test/generate",
-    "lint": "eslint . --ignore-path=.gitignore",
+    "lint": "eslint .",
     "semantic-release": "semantic-release",
     "precommit": "pretty-quick --staged"
   },
