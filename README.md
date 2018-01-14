@@ -15,13 +15,13 @@ Search your JavaScript files for patterns based on AST shape, rather than substr
 With `yarn`:
 
 ```shellsession
-yarn add ast-grep
+yarn global add ast-grep
 ```
 
 With `npm`:
 
 ```shellsession
-npm install --save ast-grep
+npm install --global --save ast-grep
 ```
 
 ## Usage
