@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`identifiers named.js: frames 1`] = `
+> 1 | foo();
+    | ^^^
+  2 | bar();
+  3 | baz();
+  4 | 
+`;
+
+exports[`identifiers named.js: raw 1`] = `
+
+foo();
+
+`;

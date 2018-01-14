@@ -5,13 +5,28 @@
   "repository": "azz/ast-grep",
   "author": "Lucas Azzola <@azz>",
   "main": "./dist",
+  "bin": "./dist/bin/ast-grep.js",
   "license": "MIT",
-  "files": ["dist"],
-  "dependencies": {},
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/code-frame": "7.0.0-beta.37",
+    "@babel/traverse": "^7.0.0-beta.37",
+    "babylon": "7.0.0-beta.37",
+    "core-js": "^2.5.3",
+    "deep-equal": "^1.0.1",
+    "get-stream": "^3.0.0",
+    "globby": "^7.1.1",
+    "mem": "^3.0.0",
+    "mri": "^1.1.0",
+    "omit-deep-lodash": "^1.0.0"
+  },
   "scripts": {
     "prepublishOnly": "yarn build",
     "build": "babel src -d dist --copy-files --ignore __tests__",
     "test": "jest",
+    "test:generate": "babel-node test/generate",
     "lint": "eslint . --ignore-path=.gitignore",
     "semantic-release": "semantic-release",
     "precommit": "pretty-quick --staged"
@@ -19,9 +34,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "common-tags": "^1.7.2",
     "eslint": "^4.15.0",
     "eslint-config-prettier": "^2.9.0",
+    "eslint-config-xo": "^0.19.0",
     "eslint-plugin-jest": "^21.5.0",
     "eslint-plugin-prettier": "^2.4.0",
     "husky": "^0.14.3",
@@ -36,6 +54,7 @@
   },
   "eslintConfig": {
     "extends": [
+      "xo/esnext",
       "eslint:recommended",
       "plugin:jest/recommended",
       "plugin:prettier/recommended"
@@ -46,9 +65,29 @@
     "env": {
       "es6": true,
       "node": true
+    },
+    "rules": {
+      "no-console": "off"
     }
   },
   "babel": {
-    "presets": [["env", { "targets": { "node": "6.10" } }]]
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "6.10"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "<rootDir>/test/raw-serializer.js"
+    ]
   }
 }
