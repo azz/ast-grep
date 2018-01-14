@@ -48,9 +48,17 @@ async function run() {
   return 0;
 }
 
-function displayMatches(matches /*, file */) {
+function displayMatches(matches, file) {
   for (const match of matches) {
-    console.log(match.text);
+    if (file) {
+      const lines = match.text.split(/\r?\n/);
+      const startLine = match.node.loc ? match.node.loc.start.line : null;
+      lines.forEach((line, i) => {
+        console.log(`${file}:${startLine + i}:${line}`);
+      });
+    } else {
+      console.log(match);
+    }
   }
 }
 
