@@ -26,6 +26,22 @@ npm install --global ast-grep
 
 ## Usage
 
+```shellsession
+$ ast-grep --help
+Options:
+  --anonymous, -a  Ignore all names in the AST                         [boolean]
+  --file, -f       Load pattern from a file                             [string]
+  --help           Show help                                           [boolean]
+  --version        Show version number                                 [boolean]
+
+Examples:
+  ast-grep.js -a 'fn()' file.js        Find all no-arg function calls in
+                                       'file.js'.
+  ast-grep.js -f pattern.js '**/*.js'  Match the pattern in 'pattern.js' across
+                                       all JS files.
+  echo 'foo' | ast-grep.js 'pattern'   Match 'pattern' on standard input.
+```
+
 On standard in:
 
 ```shellsession
@@ -39,24 +55,6 @@ On a set of files:
 
 ```shellsession
 $ ast-grep 'yield* foo();' '**/*.js'
-```
-
-## Flags
-
-### `--anonymous`
-
-**Alias**: `-a`
-
-Ignore names, this includes identifiers, types, etc.
-
-## Examples
-
-### Find all no-arg function calls:
-
-```shellsession
-$ echo -e 'foo();\nbar();' | ast-grep 'fn()' -a
-foo();
-bar();
 ```
 
 ## FAQ

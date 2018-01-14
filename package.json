@@ -19,8 +19,8 @@
     "get-stream": "^3.0.0",
     "globby": "^7.1.1",
     "mem": "^3.0.0",
-    "mri": "^1.1.0",
-    "omit-deep-lodash": "^1.0.0"
+    "omit-deep-lodash": "^1.0.0",
+    "yargs": "^10.1.1"
   },
   "scripts": {
     "prepublishOnly": "yarn build",

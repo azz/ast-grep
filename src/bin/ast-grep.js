@@ -2,27 +2,46 @@
 'use strict';
 
 import fs from 'fs';
-import mri from 'mri';
+import yargs from 'yargs';
 import globby from 'globby';
 import getStream from 'get-stream';
 
 import astGrep from '..';
 
-const { _: [grepPattern, ...filePatterns], ...args } = mri(
-  process.argv.slice(2),
-  {
-    alias: {
-      a: 'anonymous',
-    },
-    boolean: ['anonymous'],
-  }
-);
+yargs
+  .option('anonymous', {
+    alias: 'a',
+    boolean: true,
+    describe: 'Ignore all names in the AST',
+  })
+  .option('file', {
+    alias: 'f',
+    string: true,
+    describe: 'Load pattern from a file',
+  })
+  .option('debug', { string: true, hidden: true })
+  .help()
+  .version()
+  .example(
+    `$0 -a 'fn()' file.js`,
+    `Find all no-arg function calls in 'file.js'.`
+  )
+  .example(
+    `$0 -f pattern.js '**/*.js'`,
+    `Match the pattern in 'pattern.js' across all JS files.`
+  )
+  .example(`echo 'foo' | $0 'pattern'`, `Match 'pattern' on standard input.`);
 
-async function run() {
-  if (!grepPattern) {
-    console.error('usage: ast-grep pattern [glob ...]');
-    return 1;
+async function run({ _: [grepPattern, ...filePatterns], ...args }) {
+  if (!grepPattern && !args.file) {
+    yargs.showHelp();
+    return 2;
   }
+  if (args.file && grepPattern) {
+    filePatterns.unshift(grepPattern);
+    grepPattern = fs.readFileSync(args.file, 'utf8');
+  }
+
   if (filePatterns.length) {
     const files = globby.sync(filePatterns);
     if (!files.length) {
@@ -62,10 +81,10 @@ function displayMatches(matches, file) {
   }
 }
 
-run()
+run(yargs.argv)
   .then(process.exit)
   .catch(error => {
-    if (args.debug) {
+    if (yargs.argv.debug) {
       console.error(error);
     } else {
       console.error(`ast-grep: ${error.toString()}`);
