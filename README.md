@@ -58,3 +58,9 @@ $ echo -e 'foo();\nbar();' | ast-grep 'fn()' -a
 foo();
 bar();
 ```
+
+## FAQ
+
+### Q. But @azz, `grep` stands for Global Regular Expression Print, this tool doesn't use Regular Expressions!
+
+**A.** I know, but `gastp` doesn't sound great.
