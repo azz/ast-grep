@@ -35,11 +35,11 @@ Options:
   --version        Show version number                                 [boolean]
 
 Examples:
-  ast-grep.js -a 'fn()' file.js        Find all no-arg function calls in
+  ast-grep -a 'fn()' file.js           Find all no-arg function calls in
                                        'file.js'.
-  ast-grep.js -f pattern.js '**/*.js'  Match the pattern in 'pattern.js' across
+  ast-grep -f pattern.js '**/*.js'     Match the pattern in 'pattern.js' across
                                        all JS files.
-  echo 'foo' | ast-grep.js 'pattern'   Match 'pattern' on standard input.
+  echo 'foo' | ast-grep 'pattern'      Match 'pattern' on standard input.
 ```
 
 On standard in:
